@@ -1,4 +1,0 @@
-fixture:
-  interceptor:
-    aspectj:
-      expression: bean(*ApiClient)
