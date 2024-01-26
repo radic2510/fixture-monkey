@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.navercorp.fixturemonkey.tests.springtests.test;
+package com.navercorp.fixturemonkey.spring.tests;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -27,12 +27,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 
-import com.navercorp.fixturemonkey.spring.interceptor.MethodInterceptorContext;
 import com.navercorp.fixturemonkey.spring.interceptor.FixtureMonkeyInterceptorConfiguration;
-import com.navercorp.fixturemonkey.tests.springtests.SpringTestApplication;
-import com.navercorp.fixturemonkey.tests.springtests.config.TestApiClient;
+import com.navercorp.fixturemonkey.spring.interceptor.MethodInterceptorContext;
+import com.navercorp.fixturemonkey.spring.tests.config.TestApiClient;
 
 @SpringBootTest(
 	classes = SpringTestApplication.class,
@@ -41,9 +39,7 @@ import com.navercorp.fixturemonkey.tests.springtests.config.TestApiClient;
 @Import(FixtureMonkeyInterceptorConfiguration.class)
 @ActiveProfiles("test")
 class SpringTestsApplicationTests {
-
 	@Autowired
-
 	private TestApiClient testApiClient;
 
 	@AfterEach

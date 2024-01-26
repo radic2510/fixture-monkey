@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.navercorp.fixturemonkey.tests.springtests.test;
+package com.navercorp.fixturemonkey.spring.tests;
 
 public record ComplexType(String value) {
 }

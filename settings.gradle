@@ -33,7 +33,9 @@ include(
         "fixture-monkey-tests:java-concurrent-tests",
         "fixture-monkey-tests:kotlin-concurrent-tests",
         "fixture-monkey-kotest",
-        "fixture-monkey-spring",
-        "fixture-monkey-tests:spring-tests"
 )
+
+if (JavaVersion.current() >= JavaVersion.VERSION_17) {
+    include("fixture-monkey-spring")
+}
 

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.navercorp.fixturemonkey.tests.springtests;
+package com.navercorp.fixturemonkey.spring.tests;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

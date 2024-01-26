@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.navercorp.fixturemonkey.tests.springtests.config;
+package com.navercorp.fixturemonkey.spring.tests.config;
 
 import java.net.URI;
 
@@ -26,7 +26,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
-import com.navercorp.fixturemonkey.tests.springtests.test.ComplexType;
+import com.navercorp.fixturemonkey.spring.tests.ComplexType;
 
 @Component
 @RequiredArgsConstructor
