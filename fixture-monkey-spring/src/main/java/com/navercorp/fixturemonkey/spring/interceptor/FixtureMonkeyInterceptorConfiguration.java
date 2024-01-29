@@ -29,10 +29,10 @@ import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.NameMatchMethodPointcut;
 import org.springframework.aop.support.Pointcuts;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import com.navercorp.fixturemonkey.FixtureMonkey;
@@ -40,7 +40,7 @@ import com.navercorp.fixturemonkey.spring.interceptor.properties.AspectJPointcut
 import com.navercorp.fixturemonkey.spring.interceptor.properties.MethodNamePointcutProperty;
 
 @SuppressWarnings("SpringFacetCodeInspection")
-@Configuration
+@AutoConfiguration
 @EnableAspectJAutoProxy
 @ConfigurationPropertiesScan
 public class FixtureMonkeyInterceptorConfiguration {

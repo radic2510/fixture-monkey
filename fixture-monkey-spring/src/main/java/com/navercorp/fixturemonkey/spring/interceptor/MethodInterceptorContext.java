@@ -25,13 +25,12 @@ import java.util.Objects;
 
 import javax.annotation.Nullable;
 
-import com.navercorp.fixturemonkey.api.container.ConcurrentLruCache;
 import com.navercorp.fixturemonkey.spring.interceptor.MethodInterceptorContext.RequestTarget.FixtureMonkeyManipulation;
 import com.navercorp.fixturemonkey.spring.interceptor.MethodInterceptorContext.RequestTarget.RequestMethod;
 
 public final class MethodInterceptorContext {
-	private static final Map<Class<?>, RequestTarget> targetsByType =
-		new ConcurrentLruCache<>(2048);
+	private static final ThreadLocal<Map<Class<?>, RequestTarget>> targetsByType =
+		ThreadLocal.withInitial(() -> new HashMap<>(2048));
 
 	public static FixtureMonkeyManipulation type(Class<?> methodCallerType, Class<?> returnType) {
 		return method(methodCallerType, new RequestMethod<>(returnType, null));
@@ -42,7 +41,7 @@ public final class MethodInterceptorContext {
 	}
 
 	private static FixtureMonkeyManipulation method(Class<?> type, RequestMethod<?> requestMethod) {
-		RequestTarget requestTarget = targetsByType.computeIfAbsent(type, key ->
+		RequestTarget requestTarget = targetsByType.get().computeIfAbsent(type, key ->
 			new RequestTarget(key, new HashMap<>())
 		);
 
@@ -61,7 +60,7 @@ public final class MethodInterceptorContext {
 	}
 
 	private static Map<String, Object> get(Class<?> apiClientType, RequestMethod<?> requestMethod) {
-		RequestTarget requestTarget = targetsByType.computeIfAbsent(apiClientType, type ->
+		RequestTarget requestTarget = targetsByType.get().computeIfAbsent(apiClientType, type ->
 			new RequestTarget(apiClientType, new HashMap<>())
 		);
 
@@ -75,7 +74,7 @@ public final class MethodInterceptorContext {
 	}
 
 	public static void clear() {
-		targetsByType.clear();
+		targetsByType.remove();
 	}
 
 	public record RequestTarget(
@@ -111,8 +110,9 @@ public final class MethodInterceptorContext {
 		public record FixtureMonkeyManipulation(
 			Map<String, Object> valuesByExpression
 		) {
-			public void set(String expression, Object value) {
+			public FixtureMonkeyManipulation set(String expression, Object value) {
 				valuesByExpression.put(expression, value);
+				return this;
 			}
 
 			@Override

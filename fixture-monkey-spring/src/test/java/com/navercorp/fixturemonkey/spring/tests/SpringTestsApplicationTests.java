@@ -23,9 +23,9 @@ import static org.assertj.core.api.BDDAssertions.then;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.navercorp.fixturemonkey.spring.interceptor.FixtureMonkeyInterceptorConfiguration;
@@ -36,8 +36,8 @@ import com.navercorp.fixturemonkey.spring.tests.config.TestApiClient;
 	classes = SpringTestApplication.class,
 	webEnvironment = WebEnvironment.NONE
 )
-@Import(FixtureMonkeyInterceptorConfiguration.class)
 @ActiveProfiles("test")
+@ImportAutoConfiguration(FixtureMonkeyInterceptorConfiguration.class)
 class SpringTestsApplicationTests {
 	@Autowired
 	private TestApiClient testApiClient;
