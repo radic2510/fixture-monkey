@@ -6,7 +6,7 @@ plugins {
 
 allprojects {
     group = "com.navercorp.fixturemonkey.snapshot"
-    version = "1.0.13-spring-1"
+    version = "1.0.13-spring-2"
 }
 
 subprojects {
