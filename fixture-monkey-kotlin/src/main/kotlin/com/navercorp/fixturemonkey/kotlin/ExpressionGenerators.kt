@@ -79,6 +79,14 @@ infix fun <F, T : Any, R> KProperty1<F, T?>.into(property: KProperty1<T, R?>): J
         ),
     )
 
+@JvmName("root")
+infix fun <F, T : Any, R> KProperty1<F, Class<T>>.into(property: KProperty1<T, R?>): JoinableExpressionGenerator<F, R> =
+    DefaultJoinableExpressionGenerator(property(property))
+
+@JvmName("root")
+infix fun <F, T : Any, R> KProperty1<F, Class<T>>.intoGetter(getter: KFunction1<T, R?>): JoinableExpressionGenerator<F, R> =
+    DefaultJoinableExpressionGenerator(property(getter))
+
 infix fun <F, T : Any, R> KProperty1<F, T?>.into(expressionGenerator: JoinableExpressionGenerator<T, R>): JoinableExpressionGenerator<F, R> =
     DefaultJoinableExpressionGenerator(
         JoinExpressionGenerator(

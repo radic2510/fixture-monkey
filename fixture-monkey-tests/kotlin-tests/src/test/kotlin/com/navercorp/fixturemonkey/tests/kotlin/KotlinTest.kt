@@ -41,9 +41,18 @@ import com.navercorp.fixturemonkey.kotlin.instantiator.instantiateBy
 import com.navercorp.fixturemonkey.kotlin.into
 import com.navercorp.fixturemonkey.kotlin.intoGetter
 import com.navercorp.fixturemonkey.kotlin.introspector.PrimaryConstructorArbitraryIntrospector
+import com.navercorp.fixturemonkey.kotlin.maxSize
+import com.navercorp.fixturemonkey.kotlin.minSize
 import com.navercorp.fixturemonkey.kotlin.pushExactTypeArbitraryIntrospector
+import com.navercorp.fixturemonkey.kotlin.set
 import com.navercorp.fixturemonkey.kotlin.setExp
 import com.navercorp.fixturemonkey.kotlin.setExpGetter
+import com.navercorp.fixturemonkey.kotlin.setLazy
+import com.navercorp.fixturemonkey.kotlin.setLazyExp
+import com.navercorp.fixturemonkey.kotlin.setNotNull
+import com.navercorp.fixturemonkey.kotlin.setNull
+import com.navercorp.fixturemonkey.kotlin.setPostCondition
+import com.navercorp.fixturemonkey.kotlin.size
 import com.navercorp.fixturemonkey.kotlin.sizeExp
 import com.navercorp.fixturemonkey.kotlin.sizeExpGetter
 import com.navercorp.fixturemonkey.tests.TestEnvironment.TEST_COUNT
@@ -422,6 +431,91 @@ class KotlinTest {
 
         // then
         then(actual).isNotNull
+    }
+
+    @Test
+    fun setRootExp() {
+        val expected = "test"
+
+        val actual = SUT.giveMeBuilder<String>()
+            .set(String::javaClass, expected)
+            .sample()
+
+        then(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun setLazyRootExp() {
+        val expected = "test"
+
+        val actual = SUT.giveMeBuilder<String>()
+            .setLazy(String::javaClass) { expected }
+            .sample()
+
+        then(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun setNullRootExp() {
+        val actual = SUT.giveMeBuilder<String?>()
+            .setNull(String::javaClass)
+            .sample()
+
+        then(actual).isNull()
+    }
+
+    @RepeatedTest(TEST_COUNT)
+    fun setNotNullRootExp() {
+        val actual = SUT.giveMeBuilder<String?>()
+            .setNotNull(String::javaClass)
+            .sample()
+
+        then(actual).isNotNull()
+    }
+
+    @RepeatedTest(TEST_COUNT)
+    fun sizeRootExp() {
+        val actual = SUT.giveMeBuilder<List<String>>()
+            .size(List<String>::javaClass, 1)
+            .sample()
+
+        then(actual).hasSize(1)
+    }
+
+    @RepeatedTest(TEST_COUNT)
+    fun sizeRangeRootExp() {
+        val actual = SUT.giveMeBuilder<List<String>>()
+            .size(List<String>::javaClass, 1, 3)
+            .sample()
+
+        then(actual).hasSizeBetween(1, 3)
+    }
+
+    @RepeatedTest(TEST_COUNT)
+    fun minSizeRootExp() {
+        val actual = SUT.giveMeBuilder<List<String>>()
+            .minSize(List<String>::javaClass, 1)
+            .sample()
+
+        then(actual).hasSizeGreaterThanOrEqualTo(1)
+    }
+
+    @RepeatedTest(TEST_COUNT)
+    fun maxSizeRootExp() {
+        val actual = SUT.giveMeBuilder<List<String>>()
+            .maxSize(List<String>::javaClass, 1)
+            .sample()
+
+        then(actual).hasSizeLessThanOrEqualTo(1)
+    }
+
+    @Test
+    fun setPostConditionRootExp() {
+        val actual = SUT.giveMeBuilder<String>()
+            .setPostCondition(String::javaClass) { it.length < 5 }
+            .sample()
+
+        then(actual).hasSizeLessThan(5)
     }
 
     companion object {

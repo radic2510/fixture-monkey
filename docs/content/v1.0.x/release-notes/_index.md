@@ -6,6 +6,12 @@ docs:
 weight: 100
 ---
 sectionStart
+### v.1.0.14
+Add a new Kotlin Exp expression for referencing root.
+
+sectionEnd
+
+sectionStart
 ### v.1.0.13
 Add InterfacePlugin supports abstract classes through `abstractClassExtends` option.
 
